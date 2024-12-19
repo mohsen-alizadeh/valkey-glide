@@ -1,4 +1,5 @@
 // Copyright Valkey GLIDE Project Contributors - SPDX Identifier: Apache-2.0
+//
 
 use glide_core::client;
 use glide_core::client::Client as GlideClient;
@@ -68,7 +69,11 @@ fn create_client_internal(
     })
 }
 
-/// Creates a new client to the given address. The success callback needs to copy the given string synchronously, since it will be dropped by Rust once the callback returns. All callbacks should be offloaded to separate threads in order not to exhaust the client's thread pool.
+/// Creates a new client to the given address.
+/// The success callback needs to copy the given string synchronously,
+/// since it will be dropped by Rust once the callback returns.
+/// All callbacks should be offloaded to separate threads in order not to exhaust
+/// the client's thread pool.
 #[no_mangle]
 pub extern "C" fn create_client(
     host: *const c_char,
