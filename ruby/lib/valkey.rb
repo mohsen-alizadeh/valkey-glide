@@ -3,7 +3,7 @@
 require_relative "valkey/version"
 require_relative "valkey/valkey"
 
-# class Valkey
+class Valkey
 #     # SERVER_URL_OPTIONS = %i(url host port path).freeze
 #
 # #  def initialize(options = {})
@@ -25,4 +25,4 @@ require_relative "valkey/valkey"
 # #  def get(key)
 # #     create_client
 # #  end
-# end
+end

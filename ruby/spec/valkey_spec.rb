@@ -8,10 +8,10 @@ RSpec.describe Valkey do
   it "felan" do
       client = Valkey.new
 
-      # client.set("foo", "bar")
+      client.set("foo", "bar")
 
-      pp client.methods.grep /client/
-      client.create_client
+      # pp client.methods.grep /client/
+      # puts client.create_client
 
 
 
