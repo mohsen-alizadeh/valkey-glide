@@ -5,16 +5,11 @@ RSpec.describe Valkey do
     expect(Valkey::VERSION).not_to be nil
   end
 
-  it "felan" do
+  it "set a simple string" do
       client = Valkey.new
 
       client.set("foo", "bar")
 
-      # pp client.methods.grep /client/
-      # puts client.create_client
-
-
-
-      # expect(client.get("foo")).to eq("bar")
+      expect(client.get("foo")).to eq("bar")
   end
 end
