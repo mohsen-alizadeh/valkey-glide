@@ -9,8 +9,10 @@ publish = false
 crate-type = ["cdylib"]
 
 [dependencies]
-glide-core = { path = "../../../glide-core" }
+glide-core = { path = "../../../glide-core", features = ["socket-layer"] }
 redis = { path = "../../../glide-core/redis-rs/redis", features = ["aio", "tokio-comp","tokio-native-tls-comp"] }
 tokio = { version = "^1", features = ["rt", "macros", "rt-multi-thread", "time"] }
 magnus = { version = "0.6.2" }
 logger_core = {path = "../../../logger_core"}
+futures = "0.3.31"
+protobuf = { version = "3.3.0", features = [] }

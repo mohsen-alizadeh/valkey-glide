@@ -2,13 +2,21 @@ PATH
   remote: .
   specs:
     valkey (0.1.0)
+      google-protobuf (~> 4.29.2)
       rb_sys (~> 0.9.91)
 
 GEM
   remote: https://rubygems.org/
   specs:
     ast (2.4.2)
+    bigdecimal (3.1.8)
     diff-lcs (1.5.1)
+    google-protobuf (4.29.2)
+      bigdecimal
+      rake (>= 13)
+    google-protobuf (4.29.2-x86_64-linux)
+      bigdecimal
+      rake (>= 13)
     json (2.9.1)
     language_server-protocol (3.17.0.3)
     parallel (1.26.3)

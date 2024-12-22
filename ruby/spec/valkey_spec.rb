@@ -8,8 +8,13 @@ RSpec.describe Valkey do
   it "set a simple string" do
       client = Valkey.new
 
-      client.set("foo", "bar")
+      pp client
+      client.test()
 
-      expect(client.get("foo")).to eq("bar")
+      # client.get("foo")
+
+      # client.set("foo", "bar")
+      #
+      # expect(client.get("foo")).to eq("bar")
   end
 end

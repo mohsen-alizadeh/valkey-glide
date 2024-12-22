@@ -2,8 +2,20 @@
 
 require_relative "valkey/version"
 require_relative "valkey/valkey"
+require_relative "valkey/protobuf/command_request_pb"
+require_relative "valkey/protobuf/connection_request_pb"
+require_relative "valkey/protobuf/response_pb"
 
 class Valkey
+  # def initialize(options = {})
+  #     puts "initialize in Ruby"
+  #
+  #     request = ConnectionRequest::ConnectionRequest.new(
+  #         addresses: [ConnectionRequest::NodeAddress.new(host: '127.0.0.1', port: 6379)]
+  #     )
+  #
+  #     create_client(ConnectionRequest::ConnectionRequest.encode(request))
+  # end
 #     # SERVER_URL_OPTIONS = %i(url host port path).freeze
 #
 # #  def initialize(options = {})
@@ -20,9 +32,22 @@ class Valkey
 # #   end
 #
 #  def set(key, value)
-#  end
+#     CommandRequest::Command.new(request_type: CommandRequest::RequestType::Set)
 #
-# #  def get(key)
-# #     create_client
-# #  end
+#     pp
+#  end
+
+# def test()
+#     puts "TEST --- "
+# end
+
+ def get(key)
+     request = CommandRequest::Command.new(
+        request_type: CommandRequest::RequestType::Get
+     )
+
+     pp (CommandRequest::Command.encode(request))
+
+     execute(CommandRequest::Command.encode(request))
+ end
 end
