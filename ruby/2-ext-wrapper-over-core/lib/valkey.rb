@@ -21,3 +21,5 @@ class Valkey
     @client = Client.new(ConnectionRequest::ConnectionRequest.encode(request))
   end
 end
+
+ValkeyClient = Valkey

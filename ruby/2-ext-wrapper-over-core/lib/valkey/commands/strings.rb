@@ -26,6 +26,10 @@ class Valkey
       #
       # @param [String] key
       # @return [String]
+      def get(key)
+        @client.get_v2(key)
+      end
+
       def get_v2(key)
         @client.get_v2(key)
       end

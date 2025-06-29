@@ -3,4 +3,4 @@
 require "mkmf"
 require "rb_sys/mkmf"
 
-create_rust_makefile("valkey/valkey")
+create_rust_makefile("valkey_glide")

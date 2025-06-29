@@ -13,9 +13,9 @@ require "rb_sys/extensiontask"
 
 task build: :compile
 
-GEMSPEC = Gem::Specification.load("valkey.gemspec")
+GEMSPEC = Gem::Specification.load("valkey-glide.gemspec")
 
-RbSys::ExtensionTask.new("valkey", GEMSPEC) do |ext|
+RbSys::ExtensionTask.new("valkey-glide", GEMSPEC) do |ext|
   ext.lib_dir = "lib/valkey"
 end
 
