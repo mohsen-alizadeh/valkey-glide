@@ -16,6 +16,8 @@ end
 
 random = SecureRandom.hex(10)
 
+puts "Random key: #{random}"
+
 valkey = ValkeyGlide.new
 redis = Redis.new
 
@@ -36,3 +38,5 @@ Benchmark.ips do |x|
 
   x.compare!
 end
+
+redis.del(random)
