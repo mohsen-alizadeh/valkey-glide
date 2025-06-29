@@ -19,21 +19,21 @@ use glide_core::ConnectionRequest;
 use magnus::TryConvert;
 use protobuf::Message;
 
-#[magnus::wrap(class = "Valkey")]
-struct Valkey {
+#[magnus::wrap(class = "ValkeyGlide2")]
+struct ValkeyGlide2 {
     // runtime: Runtime,
     // client: GlideClient,
 }
 
-// struct Valkey {
+// struct ValkeyGlide2 {
 //     runtime: RefCell<Runtime>,
 //     client: RefCell<GlideClient>,
 // }
 
-// #[magnus::wrap(class = "Valkey")]
-// struct MutValkey(RefCell<Valkey>);
+// #[magnus::wrap(class = "ValkeyGlide2")]
+// struct MutValkeyGlide2(RefCell<ValkeyGlide2>);
 
-impl Valkey {
+impl ValkeyGlide2 {
     fn new() -> Self {
         Self{}
     }
@@ -50,7 +50,7 @@ impl Valkey {
     //
     //     let client = runtime.block_on(GlideClient::new(request, None)).unwrap();
     //
-    //     Valkey{client: RefCell::new(client), runtime: RefCell::new(runtime)}
+    //     ValkeyGlide2{client: RefCell::new(client), runtime: RefCell::new(runtime)}
     // }
 
     // fn create_client(connection_request: magnus::RString) -> Self {
@@ -70,8 +70,8 @@ impl Valkey {
     //         .block_on(GlideClient::new(ConnectionRequest::from(request), None))
     //         .map_err(|err| err.to_string()).unwrap();
     //
-    //     // Valkey{client: RefCell::new(client), runtime: RefCell::new(runtime)}
-    //     Valkey{client: client, runtime: runtime}
+    //     // ValkeyGlide2{client: RefCell::new(client), runtime: RefCell::new(runtime)}
+    //     ValkeyGlide2{client: client, runtime: runtime}
     // }
 
     fn test(&self) -> isize {
@@ -153,14 +153,14 @@ impl Valkey {
 
 #[magnus::init]
 fn init(ruby: &Ruby) -> Result<(), Error> {
-    let class = ruby.define_class("Valkey", ruby.class_object())?;
-    // class.define_singleton_method("new", function!(Valkey::new, 0))?;
-    // class.define_singleton_method("create_client", function!(Valkey::create_client, 1))?;
-    // class.define_method("create_client", function!(Valkey::create_client, 1))?;
-    class.define_method("test", method!(Valkey::test, 0))?;
-    // class.define_method("create_client", method!(MutValkey::create_client, 0))?;
-    // class.define_method("set", method!(Valkey::set, 2))?;
-    // class.define_method("get", method!(Valkey::get, 1))?;
-    // class.define_method("execute", method!(Valkey::execute, 1))?;
+    let class = ruby.define_class("ValkeyGlide2", ruby.class_object())?;
+    // class.define_singleton_method("new", function!(ValkeyGlide2::new, 0))?;
+    // class.define_singleton_method("create_client", function!(ValkeyGlide2::create_client, 1))?;
+    // class.define_method("create_client", function!(ValkeyGlide2::create_client, 1))?;
+    class.define_method("test", method!(ValkeyGlide2::test, 0))?;
+    // class.define_method("create_client", method!(MutValkeyGlide2::create_client, 0))?;
+    // class.define_method("set", method!(ValkeyGlide2::set, 2))?;
+    // class.define_method("get", method!(ValkeyGlide2::get, 1))?;
+    // class.define_method("execute", method!(ValkeyGlide2::execute, 1))?;
     Ok(())
 }

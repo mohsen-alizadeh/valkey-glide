@@ -1,12 +1,12 @@
 # frozen_string_literal: true
 
-RSpec.describe Valkey do
+RSpec.describe ValkeyGlide2 do
   it "has a version number" do
-    expect(Valkey::VERSION).not_to be nil
+    expect(ValkeyGlide2::VERSION).not_to be nil
   end
 
   it "set a simple string" do
-      client = Valkey.new
+      client = ValkeyGlide2.new
 
       pp client
       client.test()

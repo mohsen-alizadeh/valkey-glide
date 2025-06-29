@@ -6,7 +6,7 @@ require_relative "valkey/protobuf/command_request_pb"
 require_relative "valkey/protobuf/connection_request_pb"
 require_relative "valkey/protobuf/response_pb"
 
-class ValkeyGlide2
+class ValkeyGlide2Glide2
   def get(key)
     request = CommandRequest::Command.new(
       request_type: CommandRequest::RequestType::Get
