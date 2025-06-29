@@ -1,6 +1,6 @@
 # Understanding Ruby, Concurrency, and the GIL
 
-Ruby is a dynamic, object-oriented programming language known for its simplicity and developer-friendly syntax. It is interpreted, meaning Ruby code is executed line-by-line by an interpreter—most commonly MRI (Matz's Ruby Interpreter). Ruby handles everything as an object, including numbers and functions, and is widely used for web development, especially with frameworks like Ruby on Rails.
+uby is a dynamic, object-oriented programming language known for its simplicity and developer-friendly syntax. It is interpreted, meaning Ruby code is executed line-by-line by an interpreter—most commonly MRI (Matz's Ruby Interpreter). Ruby handles everything as an object, including numbers and functions, and is widely used for web development, especially with frameworks like Ruby on Rails.
 
 ## Concurrency and Threads in Ruby
 
@@ -120,3 +120,4 @@ sleep(3)
 
 This behavior helps Ruby support **concurrent I/O** workloads efficiently, despite having a GIL.
 
+* 1. Pure ruby, load libglide_ffi.so using ruby-ffi gem
