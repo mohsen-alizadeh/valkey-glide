@@ -2,6 +2,7 @@ require 'bundler/inline'
 require 'securerandom'
 
 implementation = ARGV[0]
+
 puts "Using implementation: #{implementation}"
 
 gemfile do
@@ -11,6 +12,7 @@ gemfile do
   gem 'valkey-glide', path: implementation
   gem 'pry'
   gem 'redis'
+  gem 'hiredis'
 end
 
 
