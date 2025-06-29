@@ -1,4 +1,3 @@
-
 require 'bundler/inline'
 require 'securerandom'
 
