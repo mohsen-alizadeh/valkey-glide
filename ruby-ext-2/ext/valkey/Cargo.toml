@@ -1,0 +1,18 @@
+[package]
+name = "valkey"
+version = "0.1.0"
+edition = "2021"
+authors = ["Mohsen Alizadeh <mohsen@alizadeh.us>"]
+publish = false
+
+[lib]
+crate-type = ["cdylib"]
+
+[dependencies]
+glide-core = { path = "../../../glide-core", features = ["socket-layer"] }
+redis = { path = "../../../glide-core/redis-rs/redis", features = ["aio", "tokio-comp","tokio-native-tls-comp"] }
+tokio = { version = "^1", features = ["rt", "macros", "rt-multi-thread", "time"] }
+magnus = { version = "0.6.2" }
+logger_core = {path = "../../../logger_core"}
+protobuf = { version = "3.3.0", features = [] }
+bytes = "1.9.0"
