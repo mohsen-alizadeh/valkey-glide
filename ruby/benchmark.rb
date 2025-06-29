@@ -14,7 +14,7 @@ valkey = ValkeyGlide.new
 redis = Redis.new
 
 Benchmark.ips do |x|
-  x.report("valkey") { valkey.get("foo") }
+  x.report("1-pure-ruby") { valkey.get("foo") }
 
   x.report("redis") { redis.get("foo") }
 
