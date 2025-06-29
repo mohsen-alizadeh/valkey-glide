@@ -27,7 +27,5 @@ class ValkeyGlide
     response_ptr = Native.create_client(
       request
     )
-
-    pp response_ptr
   end
 end
