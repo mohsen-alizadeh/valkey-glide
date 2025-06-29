@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 require_relative "valkey/version"
-require_relative "valkey/valkey"
+require_relative "valkey/valkey_glide"
 require_relative "valkey/protobuf/command_request_pb"
 require_relative "valkey/protobuf/connection_request_pb"
 require_relative "valkey/protobuf/response_pb"
@@ -21,5 +21,3 @@ class Valkey
     @client = Client.new(ConnectionRequest::ConnectionRequest.encode(request))
   end
 end
-
-ValkeyClient = Valkey
