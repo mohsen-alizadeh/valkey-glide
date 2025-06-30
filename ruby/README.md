@@ -120,4 +120,9 @@ sleep(3)
 
 This behavior helps Ruby support **concurrent I/O** workloads efficiently, despite having a GIL.
 
+
+# Ruby gem implementation options
+
 ![image](https://github.com/user-attachments/assets/4f5f407e-f2db-4166-a34a-fc29e6f51e5f)
+
+
