@@ -8,11 +8,11 @@ require_relative "valkey-glide/response_type"
 require_relative "valkey-glide/protobuf/command_request_pb"
 require_relative "valkey-glide/protobuf/connection_request_pb"
 require_relative "valkey-glide/protobuf/response_pb"
-require_relative "valkey-glide/native"
+require_relative "valkey-glide/bindings"
 require_relative "valkey-glide/commands/strings"
 
 class ValkeyGlide
-  extend Native
+  extend Bindings
   include Commands::Strings
 
   def your_pubsub_callback(_client_ptr, kind, msg_ptr, msg_len, chan_ptr, chan_len, pat_ptr, pat_len)
@@ -36,7 +36,7 @@ class ValkeyGlide
 
     route_buf = FFI::MemoryPointer.from_string(route)
 
-    res = Native.command(
+    res = Bindings.command(
       @connection, # Assuming @connection is set after create
       channel,
       command_type,
@@ -48,7 +48,7 @@ class ValkeyGlide
     )
 
 
-    result = Native::CommandResult.new(res)[:response]
+    result = Bindings::CommandResult.new(res)[:response]
 
     case result[:response_type]
     when ResponseType::STRING
@@ -70,7 +70,7 @@ class ValkeyGlide
       addresses: [ConnectionRequest::NodeAddress.new(host: "127.0.0.1", port: 6379)]
     )
 
-    client_type = Native::ClientType.new
+    client_type = Bindings::ClientType.new
     client_type[:tag] = 1 # AsyncClient
 
     request_str = ConnectionRequest::ConnectionRequest.encode(request)
@@ -79,14 +79,14 @@ class ValkeyGlide
 
     request_len = request_str.bytesize
 
-    response_ptr = Native.create_client(
+    response_ptr = Bindings.create_client(
       request_buf,
       request_len,
       client_type,
       method(:your_pubsub_callback) # Pass the pubsub callback
     )
 
-    res = Native::ConnectionResponse.new(response_ptr)
+    res = Bindings::ConnectionResponse.new(response_ptr)
 
     @connection = res[:conn_ptr]
   end

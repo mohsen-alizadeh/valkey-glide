@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class ValkeyGlide
-  module Native
+  module Bindings
     extend FFI::Library
     ffi_lib File.expand_path("./libglide_ffi.so", __dir__)
 
