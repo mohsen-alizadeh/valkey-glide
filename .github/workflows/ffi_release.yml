@@ -6,7 +6,7 @@ on:
 
 jobs:
   build:
-    name: Cross-compile Rust Library
+    name: Cross-compile Rust FFI Library
     runs-on: ubuntu-latest
 
     strategy:
@@ -20,27 +20,25 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Install Rust
+      - name: Install Rust toolchain
         uses: actions-rs/toolchain@v1
         with:
           toolchain: stable
           override: true
           target: ${{ matrix.target }}
 
-      - name: Install dependencies for cross-compilation
+      - name: Install dependencies for cross-compilation (Windows)
         if: matrix.target == 'x86_64-pc-windows-gnu'
         run: sudo apt-get update && sudo apt-get install -y gcc-mingw-w64
 
-      - name: change directory to FFI
-        run: cd ffi
-
       - name: Build library
+        working-directory: ffi
         run: cargo build --release --target ${{ matrix.target }}
 
       - name: Package artifacts
         run: |
           mkdir -p artifacts
-          cp target/${{ matrix.target }}/release/lib* artifacts/ || echo "No matching library files"
+          cp ffi/target/${{ matrix.target }}/release/lib* artifacts/ || echo "No output libraries found"
 
       - name: Upload release artifacts
         uses: softprops/action-gh-release@v2
