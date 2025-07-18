@@ -27,6 +27,9 @@ jobs:
           override: true
           target: ${{ matrix.target }}
 
+      - name: install dependencies
+        run: sudo apt-get update && sudo apt-get install -y protobuf-compiler
+
       - name: Install dependencies for cross-compilation (Windows)
         if: matrix.target == 'x86_64-pc-windows-gnu'
         run: sudo apt-get update && sudo apt-get install -y gcc-mingw-w64
