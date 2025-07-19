@@ -67,7 +67,7 @@ jobs:
       - name: Build shared library
         working-directory: ffi
         run: |
-          export RUSTFLAGS="-C prefer-dynamic"
+          # export RUSTFLAGS="-C prefer-dynamic"
           cargo build --release --target ${{ matrix.target }}
 
       - name: Rename output shared library
@@ -75,6 +75,7 @@ jobs:
         run: |
           mkdir output
           ls -la target/
+          ls -la target/${{ matrix.target }}/release
           libname=$(basename target/${{ matrix.target }}/release/*.${{ matrix.shared_ext }})
           cp target/${{ matrix.target }}/release/$libname output/libvalkeyglide-${{ matrix.suffix }}.${{ matrix.shared_ext }}
 
