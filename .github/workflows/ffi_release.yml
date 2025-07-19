@@ -47,17 +47,22 @@ jobs:
           target: ${{ matrix.target }}
           override: true
 
+      - name: Install dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y protobuf-compiler
+
       - name: Install MUSL tools (for MUSL only)
         if: matrix.target == 'x86_64-unknown-linux-musl'
         run: |
           sudo apt-get update
-          sudo apt-get install -y musl-tools protobuf-compiler
+          sudo apt-get install -y musl-tools
 
       - name: Install GCC for AArch64 (Linux only)
         if: matrix.target == 'aarch64-unknown-linux-gnu'
         run: |
           sudo apt-get update
-          sudo apt-get install -y gcc-aarch64-linux-gnu protobuf-compiler
+          sudo apt-get install -y gcc-aarch64-linux-gnu
 
       - name: Build shared library
         working-directory: ffi
@@ -69,6 +74,7 @@ jobs:
         working-directory: ffi
         run: |
           mkdir output
+          ls -la target/
           libname=$(basename target/${{ matrix.target }}/release/*.${{ matrix.shared_ext }})
           cp target/${{ matrix.target }}/release/$libname output/libvalkeyglide-${{ matrix.suffix }}.${{ matrix.shared_ext }}
 
