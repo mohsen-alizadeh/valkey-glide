@@ -6,15 +6,35 @@ on:
 
 jobs:
   build:
-    name: Cross-compile Rust FFI Library
-    runs-on: ubuntu-latest
-
+    continue-on-error: true
+    runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        target:
-          - x86_64-unknown-linux-gnu
-          # - x86_64-pc-windows-gnu
-          # - x86_64-apple-darwin
+        include:
+          - os: ubuntu-latest
+            target: x86_64-unknown-linux-gnu
+            suffix: x86_64-linux-gnu
+            shared_ext: so
+          - os: ubuntu-latest
+            target: x86_64-unknown-linux-musl
+            suffix: x86_64-linux-musl
+            shared_ext: so
+          - os: ubuntu-latest
+            target: aarch64-unknown-linux-gnu
+            suffix: arm64-linux-gnu
+            shared_ext: so
+          - os: windows-latest
+            target: x86_64-pc-windows-msvc
+            suffix: x86_64-windows
+            shared_ext: dll
+          - os: macos-latest
+            target: x86_64-apple-darwin
+            suffix: x86_64-darwin
+            shared_ext: dylib
+          - os: macos-latest
+            target: aarch64-apple-darwin
+            suffix: arm64-darwin
+            shared_ext: dylib
 
     steps:
       - name: Checkout repository
@@ -24,29 +44,45 @@ jobs:
         uses: actions-rs/toolchain@v1
         with:
           toolchain: stable
-          override: true
           target: ${{ matrix.target }}
+          override: true
 
-      - name: install dependencies
-        run: sudo apt-get update && sudo apt-get install -y protobuf-compiler
-
-      - name: Install dependencies for cross-compilation (Windows)
-        if: matrix.target == 'x86_64-pc-windows-gnu'
-        run: sudo apt-get update && sudo apt-get install -y gcc-mingw-w64
-
-      - name: Build library
-        working-directory: ffi
-        run: cargo build --release --target ${{ matrix.target }}
-
-      - name: Package artifacts
+      - name: Install MUSL tools (for MUSL only)
+        if: matrix.target == 'x86_64-unknown-linux-musl'
         run: |
-          mkdir -p artifacts
-          cp ffi/target/${{ matrix.target }}/release/lib* artifacts/ || echo "No output libraries found"
+          sudo apt-get update
+          sudo apt-get install -y musl-tools
 
-      - name: Upload release artifacts
+      - name: Install GCC for AArch64 (Linux only)
+        if: matrix.target == 'aarch64-unknown-linux-gnu'
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y gcc-aarch64-linux-gnu
+
+      - name: Build shared library
+        working-directory: ffi
+        run: |
+          export RUSTFLAGS="-C prefer-dynamic"
+          cargo build --release --target ${{ matrix.target }}
+
+      - name: Rename output shared library
+        working-directory: ffi
+        run: |
+          mkdir output
+          libname=$(basename target/${{ matrix.target }}/release/*.${{ matrix.shared_ext }})
+          cp target/${{ matrix.target }}/release/$libname output/libvalkeyglide-${{ matrix.suffix }}.${{ matrix.shared_ext }}
+
+      - name: Generate checksum
+        working-directory: ffi
+        run: |
+          cd output
+          sha256sum libvalkeyglide-${{ matrix.suffix }}.${{ matrix.shared_ext }} > libvalkeyglide-${{ matrix.suffix }}.${{ matrix.shared_ext }}.sha256
+
+      - name: Upload to GitHub Releases
         uses: softprops/action-gh-release@v2
         with:
-          files: artifacts/*
-          name: "Artifacts for ${{ matrix.target }}"
+          files: |
+            ffi/output/libvalkeyglide-${{ matrix.suffix }}.${{ matrix.shared_ext }}
+            ffi/output/libvalkeyglide-${{ matrix.suffix }}.${{ matrix.shared_ext }}.sha256
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

@@ -25,3 +25,7 @@ lto = "fat"           # Enable the most aggressive Link Time Optimization
 codegen-units = 1     # Reduce the number of code generation units, increasing optimization time but improving performance
 strip = "symbols"     # Remove symbol
 panic = "abort"       # Code size optimization and prevent unwinding across FFI boundaries
+
+
+[target.aarch64-unknown-linux-gnu]
+linker = "aarch64-linux-gnu-gcc"
